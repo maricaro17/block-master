@@ -14,6 +14,7 @@ const Types = {
   hideModalPeliculaDetails: "[Pelicula] hide details",
   uiStartLoading: "[UI] Start Loading",
   uiFinishLoading: "[UI] Finish Loading",
+  authRegister: "[Register] user register",
 
 
 };
