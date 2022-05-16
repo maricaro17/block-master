@@ -1,18 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Form } from "react-bootstrap";
 import CustomizeButton from "./CustomizeButton";
 import makeAnimated from "react-select/animated";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "../hooks/useForm";
 import constantes from "../utils/constantes";
-import { useParams } from "react-router-dom";
 import { components } from "react-select";
 import Select from "./Select";
-import { createPelicula } from "../redux/actions/peliculaAction";
+import { createPelicula, hideModalRegisterPeliculas, updatePelicula } from "../redux/actions/peliculaAction";
 
 const FormPeliculas = () => {
   const dispatch = useDispatch();
-  const param = useParams();
   const customPrimary = "#fed941";
   const customStyles = {
     option: (provided, state) => ({
@@ -50,11 +48,9 @@ const FormPeliculas = () => {
     trailer: "",
   };
   const { loading } = useSelector((store) => store.ui);
-  const pelicula = useSelector((store) => store.pelicula);
-  const [isLoading, setIsLoading] = useState(true);
+  const pelicula = useSelector((store) => store.peliculaSelect);
   const [form, handleInputChange, handleFileChange, handleClickFile, reset] =
-    useForm(param.id ? pelicula : initialState);
-
+    useForm(pelicula.id ? pelicula : initialState);
   const handleChangeSelect = (selected) => {
     setOptionSelected(selected);
     const e = {
@@ -65,7 +61,7 @@ const FormPeliculas = () => {
     };
     handleInputChange(e);
   };
-  const { name, detalle, duracion, year, rate, trailer } = form;
+  const { name, detalle, duracion, year, rate, imagenUrl, trailer } = form;
 
   const MultiValue = (props) => (
     <components.MultiValue {...props}>
@@ -88,15 +84,22 @@ const FormPeliculas = () => {
   };
 
   const animatedComponents = makeAnimated();
-  console.table(form);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!param.id) {
+    if (!pelicula.id) {
       dispatch(createPelicula({ ...form, rate: Number(form.rate) }));
       reset();
+    } else {
+      dispatch(updatePelicula(pelicula.id, form))
+      dispatch(hideModalRegisterPeliculas())
     }
   };
 
+  useEffect(()=>{
+    
+
+  },[pelicula, dispatch])
   return (
     <Container className="d-flex movieForm">
       <Container>
@@ -140,12 +143,13 @@ const FormPeliculas = () => {
               <Form.Control
                 className="w-75"
                 type="text"
-                name="imageUrl"
+                name="imagenUrl"
                 id="image"
                 readOnly
                 style={{
                   borderRadius: "2px 0px 0px 2px",
                 }}
+                value={pelicula.id ? pelicula.imagenUrl : imagenUrl}
                 placeholder="Seleccione un archivo"
               />
 
@@ -154,7 +158,7 @@ const FormPeliculas = () => {
                 custom="primary"
                 onClick={handleClickFile}
                 type="button"
-                value="Cargar Poster"
+                value={pelicula.id ? "Actualizar Poster" : "Cargar Poster"}
                 borderRadius="0px 2px 2px 0px"
                 disabled={loading}
               />
@@ -201,7 +205,13 @@ const FormPeliculas = () => {
               components={{ Option, MultiValue, animatedComponents }}
               allowSelectAll={false}
               placeholder="Selecciona los generos asociados"
-              value={optionSelected}
+              value={
+                pelicula?.id
+                  ? constantes.GENEROS_PELICULAS.filter(
+                      (item, index) => item.label === pelicula.genero[index]
+                    )
+                  : optionSelected
+              }
               options={constantes.GENEROS_PELICULAS}
               onChange={handleChangeSelect}
             />
@@ -220,7 +230,7 @@ const FormPeliculas = () => {
             className="float-end-flex"
             type="submit"
             custom="primary"
-            value={param.id ? "Actualizar " : "Cargar Pelicula"}
+            value={pelicula.id ? "Actualizar " : "Cargar Pelicula"}
             onClick={handleSubmit}
             margin="10px 0px"
           />

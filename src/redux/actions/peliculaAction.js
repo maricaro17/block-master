@@ -11,6 +11,14 @@ const selectPelicula = (pelicula) => {
   };
 };
 
+const deselectPelicula = () => {
+  return (dispatch) => {
+    dispatch({
+      type: Types.peliculaDeselect,
+      payload: {},
+    });
+  };
+};
 const createPelicula = (data) => {
   return (dispatch) => {
     const pelicula = Peliculas.create(data);
@@ -59,6 +67,27 @@ const getPeliculas = (opt) => {
   };
 };
 
+const updatePelicula = (id, data) => {
+  return (dispatch) => {
+    dispatch(startLoading())
+    Peliculas.update(id, data).then((pelicula) => {
+      Swal.fire({
+        position: "center",
+        text: `${pelicula.name} se actualizó correctamentete`,
+        icon: "success",
+        title: "Actualización Exitosa",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      dispatch({
+        type: Types.updatePelicula,
+        payload: pelicula
+      });
+      dispatch(getPeliculas({action: "get"}))
+      dispatch(finishLoading())
+    });
+  };
+};
 const showModalRegisterPeliculas = () => {
   return (dispatch) => {
     dispatch({
@@ -76,48 +105,48 @@ const hideModalRegisterPeliculas = () => {
   };
 };
 
-const showDetails = ()=>{
+const showDetails = () => {
   return (dispatch) => {
     dispatch({
       type: Types.showModalPeliculaDetails,
       payload: true,
     });
   };
-}
+};
 
-const hideDetails = ()=>{
+const hideDetails = () => {
   return (dispatch) => {
     dispatch({
       type: Types.hideModalPeliculaDetails,
       payload: false,
     });
   };
-}
+};
 
-const getPeliculasTop = ()=>{
-  return (dispatch) =>{
-    Peliculas.findByRate("top").then((data)=>{
+const getPeliculasTop = () => {
+  return (dispatch) => {
+    Peliculas.findByRate("top").then((data) => {
       dispatch({
         type: Types.peliculasTopList,
-        payload: data
-      })
-    })
-  }
-}
-const getPeliculasLeast = ()=>{
-  return (dispatch) =>{
-    Peliculas.findByRate("least").then((data)=>{
+        payload: data,
+      });
+    });
+  };
+};
+const getPeliculasLeast = () => {
+  return (dispatch) => {
+    Peliculas.findByRate("least").then((data) => {
       dispatch({
         type: Types.peliculasLeastList,
-        payload: data
-      })
-    })
-  }
-}
+        payload: data,
+      });
+    });
+  };
+};
 
-const deletePelicula = (pelicula) =>{
-  return (dispatch) =>{
-    const peliculaDeleted = Peliculas.remove(pelicula.id)
+const deletePelicula = (pelicula) => {
+  return (dispatch) => {
+    const peliculaDeleted = Peliculas.remove(pelicula.id);
     if (peliculaDeleted) {
       dispatch(startLoading());
       Swal.fire({
@@ -134,12 +163,13 @@ const deletePelicula = (pelicula) =>{
           action: "get",
         })
       );
-      dispatch(hideDetails())
+      dispatch(hideDetails());
     }
-  }
-}
+  };
+};
 export {
   selectPelicula,
+  deselectPelicula,
   createPelicula,
   getPeliculas,
   showDetails,
@@ -148,5 +178,6 @@ export {
   hideModalRegisterPeliculas,
   getPeliculasTop,
   getPeliculasLeast,
-  deletePelicula
+  deletePelicula,
+  updatePelicula,
 };

@@ -7,6 +7,7 @@ import PeliculaDetails from "../components/PeliculaDetails";
 import Slider from "../components/Slider";
 import Title from "../components/Title";
 import {
+  deselectPelicula,
   getPeliculas,
   hideDetails,
   hideModalRegisterPeliculas,
@@ -31,6 +32,11 @@ const Peliculas = () => {
     }
     return () => setLoading(false);
   }, [dispatch, loading, peliculas, showModal]);
+
+  const handleHiddenForm = ()=>{
+    dispatch(deselectPelicula())
+    dispatch(hideModalRegisterPeliculas())
+  }
   return (
     <div>
       <Slider />
@@ -42,7 +48,7 @@ const Peliculas = () => {
       </Container>
       <ModalRegistro
         show={showModal}
-        onHide={() => dispatch(hideModalRegisterPeliculas())}
+        onHide={()=>handleHiddenForm()}
       />
       <PeliculaDetails
         show={showDetails}

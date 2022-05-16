@@ -6,16 +6,20 @@ import { FaPlay, FaPlus, FaTimes, FaTrash } from "react-icons/fa";
 
 import { ImPencil } from "react-icons/im";
 import { useDispatch } from "react-redux";
-import { deletePelicula } from "../redux/actions/peliculaAction";
+import { deletePelicula, hideDetails, showModalRegisterPeliculas } from "../redux/actions/peliculaAction";
 
 const PeliculaDetails = ({ show, onHide, peliculaSelect }) => {
+  const dispatch = useDispatch()  
   const genero = peliculaSelect.genero || [""];
   const trailerId = peliculaSelect.trailer
     ? peliculaSelect.trailer.split("=").pop()
     : "";
 
-
-  const dispatch = useDispatch()  
+  const handleEdit = (e, pelicula)=>{
+    dispatch(showModalRegisterPeliculas())
+    dispatch(hideDetails())
+  }
+ 
   return (
     <div className="d-flex">
       <Modal show={show} onHide={onHide} size="lg" centered>
@@ -25,7 +29,7 @@ const PeliculaDetails = ({ show, onHide, peliculaSelect }) => {
             type="button"
             Icon={ImPencil}
             iconSize={20}
-            /* onClick={() => handleEdit(movie)} */
+            onClick={(e) => handleEdit(e,peliculaSelect)}
           />
           <CustomizeButton
             className="bg-transparent text-danger"

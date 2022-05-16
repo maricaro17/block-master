@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, FormControl, Button} from "react-bootstrap";
+import { Form, FormControl} from "react-bootstrap";
 
 const Buscador = () => {
   return (
@@ -8,10 +8,11 @@ const Buscador = () => {
         <FormControl
           type="search"
           aria-label="Search"
+          placeholder="Busca tu pelicula favorita"
         />
-        <Button>
-          <img src="https://res.cloudinary.com/dxvzsg7fa/image/upload/v1652328493/block-master/Property_1_search_okkprg.svg" alt="buscador-icon" />
-        </Button>
+        <button>
+          <img src="https://res.cloudinary.com/dxvzsg7fa/image/upload/v1652673386/block-master/Icon_xpzqis.svg" width="24" height="24" alt="buscador-icon"  />
+        </button>
       </Form>
     </div>
   );

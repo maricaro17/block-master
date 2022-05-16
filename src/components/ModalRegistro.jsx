@@ -1,10 +1,10 @@
 import React from "react";
 import { Button, Modal } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 import FormPeliculas from "./FormPeliculas";
 
 function ModalRegistro({ show, onHide }) {
-  const param = useParams();
+  const pelicula = useSelector((store) => store.peliculaSelect);
   return (
     <Modal
       show={show}
@@ -14,7 +14,7 @@ function ModalRegistro({ show, onHide }) {
     >
       <Modal.Header style={{ backgroundColor: "black" }}>
         <Modal.Title id="contained-modal-title-vcenter">
-          {param.id ? "Actualizar pelicula" : "Agregar nueva pelicula"}
+          {pelicula.id ? "Actualizar pelicula" : "Agregar nueva pelicula"}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>

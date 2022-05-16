@@ -7,6 +7,7 @@ import {
   query,
   where,
   deleteDoc,
+  getDoc,
 } from "firebase/firestore";
 
 const coleccion = "Pelicula";
@@ -56,15 +57,25 @@ const findByRate = async (rate) => {
   return list;
 };
 
-
-const remove = async (id)=>{
+const update = async (id, data) => {
   try {
-    deleteDoc(doc(db, coleccion, id))
-    return true
+    await setDoc(doc(db, coleccion, id), data);
+    const pelicula = await getDoc(doc(db, coleccion, id));
+    const result = { id: id, ...pelicula.data()};
+    return result;
   } catch (error) {
-    return false
+    error.message = "Ha ocurrido un error";
+    return error;
   }
- 
-}
-const Peliculas = { findAll, create, findByRate, remove };
+};
+
+const remove = async (id) => {
+  try {
+    deleteDoc(doc(db, coleccion, id));
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+const Peliculas = { findAll, create, findByRate, update, remove };
 export default Peliculas;

@@ -6,6 +6,8 @@ const Types = {
   peliculasLeastList : "[Peliculas] Least List",
   pelicula: "[Pelicula] Current",
   peliculaSelect: "[Pelicula] Select",
+  peliculaDeselect: "[Pelicula] Deselect",
+  updatePelicula: "[Pelicula] Update",
   showModalPeliculasRegister: "[Pelicula] show modal form",
   hideModalPeliculasRegister: "[Pelicula] hide modal form",
   showModalPeliculaDetails: "[Pelicula] show details",

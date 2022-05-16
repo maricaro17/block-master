@@ -23,6 +23,10 @@ const selectPeliculasReducer = (state = {}, action) => {
   switch (action.type) {
     case Types.peliculaSelect:
       return action.payload;
+    case Types.updatePelicula:
+      return action.payload;
+    case Types.peliculaDeselect:
+      return action.payload;
     default:
       return state;
   }

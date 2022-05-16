@@ -9,7 +9,7 @@ const NavBar = () => {
   const dispatch = useDispatch()
   return (
    <div>
-        <Navbar bg="dark">
+        <Navbar bg="black">
       <Container>
         <Navbar.Brand href="#home">
           <img
@@ -19,13 +19,15 @@ const NavBar = () => {
           />
         </Navbar.Brand>
         <Nav className="me-auto">
-          <Link className="text-white bold text-decoration-none mx-4" to="/">Todas</Link>
-          <Link className="text-white bold text-decoration-none mx-4" to="/mas-valoradas">Mas Valoradas</Link>
-          <Link className="text-white bold text-decoration-none mx-4" to="/menos-valoradas">Menos Valoradas</Link>
+          <Link className="nav-link text-white bold text-decoration-none mx-4" to="/">Todas</Link>
+          <Link className="nav-link text-white bold text-decoration-none mx-4" to="/mas-valoradas">Mas Valoradas</Link>
+          <Link className="nav-link text-white bold text-decoration-none mx-4" to="/menos-valoradas">Menos Valoradas</Link>
         </Nav>
-        
-        <Button onClick={()=>dispatch(showModalRegisterPeliculas())}>+</Button>
+        <Buscador/>
+ 
       </Container>
+      <Button onClick={()=>dispatch(showModalRegisterPeliculas())}>+</Button>
+
     </Navbar>
    </div>
   );
