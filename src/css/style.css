@@ -1,0 +1,110 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+body {
+  background-color: #000 !important;
+  color: white !important;
+  font-family: "Montserrat", sans-serif;
+}
+
+.custom-border-line-primary {
+  border: 0.5px solid #fed941 !important;
+}
+
+.custom-btn-lg {
+  width: 100%;
+}
+
+.custom-btn-facebook {
+  background-color: #0a58ca;
+  border-color: #0a58ca;
+  color: #fff;
+}
+
+.custom-btn-google {
+  background-color: #fff;
+  border-color: rgb(223, 222, 222);
+  color: #000;
+}
+
+.custom-btn-primary {
+  background-color: #fed941;
+  border-color: #fed941;
+  color: #000;
+}
+
+.custom-btn-dark {
+  background-color: #000;
+  border-color: #fed941;
+  color: #fed941;
+}
+
+.custom-btn {
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  border: 1px solid transparent;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  border-radius: 0.25rem;
+}
+
+.btn-banner {
+  position: absolute;
+  bottom: 30px;
+  left: 100px;
+}
+
+.cover {
+  width: 1200px;
+  height: 310px;
+  margin: auto;
+}
+
+.rate {
+  background-color: #0000007a;
+  position: absolute;
+  width: 100px;
+  height: 50px;
+  margin-top: -300px;
+  font-size: 24px;
+  font-weight: 700;
+  border-radius: 0 25px 25px 0;
+  padding: 0px 10px 0px 0px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.top-rate {
+  border-bottom: 3.5px solid #fed941a1;
+  border-top: 3.5px solid #fed941a1;
+  border-right: 3.5px solid #fed941a1;
+}
+
+.least-rate {
+  border-bottom: 3.5px solid #0e3fa9a1;
+  border-top: 3.5px solid #0e3fa9a1;
+  border-right: 3.5px solid #0e3fa9a1;
+}
+
+.rate span img {
+  width: 20px;
+  margin-right: 5px;
+  vertical-align: baseline;
+}
+
+
+.modal-backdrop.show {
+  opacity: 0.9 !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.modal-content {
+  background-color: transparent !important;
+}
