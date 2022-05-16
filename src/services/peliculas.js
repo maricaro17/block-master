@@ -8,13 +8,21 @@ import {
   where,
   deleteDoc,
   getDoc,
+  limit,
+  orderBy,
+  startAfter,
+  startAt,
 } from "firebase/firestore";
 
 const coleccion = "Pelicula";
-
+let primerDocumento, ultimoDocumento;
 const findAll = async (dispatch, types) => {
-  const peliculas = await getDocs(collection(db, coleccion));
+  const peliculas = await getDocs(
+    query(collection(db, coleccion), orderBy("year", "desc"), limit(15))
+  );
   const list = [];
+  primerDocumento = peliculas.docs[0];
+  ultimoDocumento = peliculas.docs[peliculas.docs.length - 1];
   peliculas.forEach((doc) => {
     list.push({
       id: doc.id,
@@ -38,16 +46,66 @@ const create = async (data) => {
 
 const findByRate = async (rate) => {
   let consulta;
-  if (rate === "top") {
-    consulta = query(collection(db, coleccion), where("rate", ">", 5));
-  }
-
-  if (rate === "least") {
-    consulta = query(collection(db, coleccion), where("rate", "<=", 5));
+  switch (rate) {
+    case "top":
+      consulta = query(
+        collection(db, coleccion),
+        limit(15),
+        where("rate", ">", 5)
+      );
+      break;
+    case "least":
+      consulta = query(
+        collection(db, coleccion),
+        limit(15),
+        where("rate", "<=", 5)
+      );
+      break;
+    case "nextTopPage":
+      consulta = query(
+        collection(db, coleccion),
+        startAfter(ultimoDocumento),
+        limit(15),
+        where("rate", ">", 5)
+      );
+      break;
+    case "prevTopPage":
+      consulta = query(
+        collection(db, coleccion),
+        startAfter(primerDocumento),
+        startAt(primerDocumento),
+        limit(15),
+        where("rate", ">", 5)
+      );
+      break;
+    case "nextLeastPage":
+      consulta = query(
+        collection(db, coleccion),
+        startAfter(ultimoDocumento),
+        limit(15),
+        where("rate", "<=", 5)
+      );
+      break;
+    case "prevLeastPage":
+      consulta = query(
+        collection(db, coleccion),
+        startAfter(primerDocumento),
+        startAt(primerDocumento),
+        limit(15),
+        where("rate", "<=", 5)
+      );
+      break;
+    default:
+      break;
   }
 
   const list = [];
   const peliculas = await getDocs(consulta);
+  if (rate === "top" || rate === "least") {
+    primerDocumento = peliculas.docs[0];
+    ultimoDocumento = peliculas.docs[peliculas.docs.length - 1];
+  }
+
   peliculas.forEach((pelicula) => {
     list.push({
       id: pelicula.id,
@@ -61,7 +119,7 @@ const update = async (id, data) => {
   try {
     await setDoc(doc(db, coleccion, id), data);
     const pelicula = await getDoc(doc(db, coleccion, id));
-    const result = { id: id, ...pelicula.data()};
+    const result = { id: id, ...pelicula.data() };
     return result;
   } catch (error) {
     error.message = "Ha ocurrido un error";
@@ -77,5 +135,56 @@ const remove = async (id) => {
     return false;
   }
 };
-const Peliculas = { findAll, create, findByRate, update, remove };
+const next = async (dispatch, types) => {
+  const peliculas = await getDocs(
+    query(
+      collection(db, coleccion),
+      orderBy("year", "desc"),
+      startAfter(ultimoDocumento),
+      limit(15)
+    )
+  );
+  const list = [];
+  peliculas.forEach((doc) => {
+    list.push({
+      id: doc.id,
+      ...doc.data(),
+    });
+  });
+  dispatch({
+    type: types.peliculasList,
+    payload: list,
+  });
+};
+const previous = async (dispatch, types) => {
+  const peliculas = await getDocs(
+    query(
+      collection(db, coleccion),
+      orderBy("year", "desc"),
+      startAfter(primerDocumento),
+      startAt(primerDocumento),
+      limit(15)
+    )
+  );
+  const list = [];
+  peliculas.forEach((doc) => {
+    list.push({
+      id: doc.id,
+      ...doc.data(),
+    });
+  });
+  dispatch({
+    type: types.peliculasList,
+    payload: list,
+  });
+};
+const Peliculas = {
+  findAll,
+  create,
+  findByRate,
+  update,
+  remove,
+  next,
+  previous,
+};
 export default Peliculas;

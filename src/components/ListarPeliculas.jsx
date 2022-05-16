@@ -17,9 +17,9 @@ const ListarPeliculas = ({ peliculas }) => {
   return (
     <div className="d-flex flex-wrap justify-content-center mb-5">
       {peliculas.length > 0 ? (
-        peliculas.map((pelicula) => (
+        peliculas.map((pelicula, index) => (
           <div
-            key={pelicula.id}
+            key={index}
             className="m-2 rounded"
             onClick={(e) => handleSelectPelicula(e, pelicula)}
           >

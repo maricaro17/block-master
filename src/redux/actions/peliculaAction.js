@@ -53,23 +53,24 @@ const createPelicula = (data) => {
 
 const getPeliculas = (opt) => {
   return (dispatch) => {
-    if (opt.action === "get") {
-      return Peliculas.findAll(dispatch, Types);
+    switch (opt.action) {
+      case "next":
+      case "nextTopPage":
+      case "nextLeastPage":
+        return Peliculas.next(dispatch, Types);
+      case "previous":
+      case "prevTopPage":
+      case "prevLeastPage":
+        return Peliculas.previous(dispatch, Types);
+      default:
+        return Peliculas.findAll(dispatch, Types);
     }
-    /* switch (opt.action) {
-        case "next":
-          return Peliculas.next(dispatch, types);
-        case "previous":
-          return Peliculas.previous(dispatch, types);
-        default:
-          
-      } */
   };
 };
 
 const updatePelicula = (id, data) => {
   return (dispatch) => {
-    dispatch(startLoading())
+    dispatch(startLoading());
     Peliculas.update(id, data).then((pelicula) => {
       Swal.fire({
         position: "center",
@@ -81,10 +82,10 @@ const updatePelicula = (id, data) => {
       });
       dispatch({
         type: Types.updatePelicula,
-        payload: pelicula
+        payload: pelicula,
       });
-      dispatch(getPeliculas({action: "get"}))
-      dispatch(finishLoading())
+      dispatch(getPeliculas({ action: "get" }));
+      dispatch(finishLoading());
     });
   };
 };
@@ -123,7 +124,19 @@ const hideDetails = () => {
   };
 };
 
-const getPeliculasTop = () => {
+const getPeliculasTop = (opt) => {
+  switch (opt.action) {
+    case "top":
+
+    break;
+    case "nextTopPage":
+      
+      break;
+      case "prevTopPage":
+        break;
+    default:
+      break;
+  }
   return (dispatch) => {
     Peliculas.findByRate("top").then((data) => {
       dispatch({

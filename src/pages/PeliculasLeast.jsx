@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+import CustomizeButton from "../components/CustomizeButton";
 import ListarPeliculas from "../components/ListarPeliculas";
 import ModalRegistro from "../components/ModalRegistro";
 import PeliculaDetails from "../components/PeliculaDetails";
 import Slider from "../components/Slider";
 import Title from "../components/Title";
 import {
+    getPeliculas,
   getPeliculasLeast,
   hideDetails,
   hideModalRegisterPeliculas,
 } from "../redux/actions/peliculaAction";
 import constantes from "../utils/constantes";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa"
 
 
 const PeliculasLeast = () => {
@@ -27,6 +30,13 @@ const PeliculasLeast = () => {
     }
     return () => setLoading(false);
   }, [dispatch, loading, peliculas, showModal]);
+
+  const handleNext = () => {
+    dispatch(getPeliculas({ action: "nextLeastPage" }));
+  };
+  const handlePrevious = () => {
+    dispatch(getPeliculas({ action: "prevLeastPage" }));
+  };
   return (
     <div>
       <Slider />
@@ -35,6 +45,24 @@ const PeliculasLeast = () => {
       </Container>
       <Container>
         <ListarPeliculas peliculas={peliculas} />
+      </Container>
+      <Container className="m-auto d-flex justify-content-around pb-5">
+        <CustomizeButton
+          custom="primary"
+          value="prev"
+          Icon={FaChevronLeft}
+          iconClassName="mx-1"
+          onClick={handlePrevious}
+          className="mx-2 bold"
+        />
+        <CustomizeButton
+          custom="primary"
+          value="next"
+          Icon={FaChevronRight}
+          iconClassName="mx-1"
+          onClick={handleNext}
+          className="mx-2 flex-row-reverse bold"
+        />
       </Container>
       <ModalRegistro
         show={showModal}
