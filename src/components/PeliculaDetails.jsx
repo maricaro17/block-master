@@ -5,17 +5,18 @@ import CustomizeButton from "./CustomizeButton";
 import { FaPlay, FaPlus, FaTimes, FaTrash } from "react-icons/fa";
 
 import { ImPencil } from "react-icons/im";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { deletePelicula, hideDetails, showModalRegisterPeliculas } from "../redux/actions/peliculaAction";
 
 const PeliculaDetails = ({ show, onHide, peliculaSelect }) => {
-  const dispatch = useDispatch()  
+  const dispatch = useDispatch()
+  const user = useSelector((store)=> store.auth)
   const genero = peliculaSelect.genero || [""];
   const trailerId = peliculaSelect.trailer
     ? peliculaSelect.trailer.split("=").pop()
     : "";
 
-  const handleEdit = (e, pelicula)=>{
+  const handleEdit = ()=>{
     dispatch(showModalRegisterPeliculas())
     dispatch(hideDetails())
   }
@@ -29,6 +30,7 @@ const PeliculaDetails = ({ show, onHide, peliculaSelect }) => {
             type="button"
             Icon={ImPencil}
             iconSize={20}
+            style={{ display: user?.isAuthenticated ? "block" : "none" }}
             onClick={(e) => handleEdit(e,peliculaSelect)}
           />
           <CustomizeButton
@@ -36,6 +38,7 @@ const PeliculaDetails = ({ show, onHide, peliculaSelect }) => {
             type="button"
             Icon={FaTrash}
             iconSize={20}
+            style={{ display: user?.isAuthenticated ? "block" : "none" }}
             onClick={()=>dispatch(deletePelicula(peliculaSelect))}
           />
           <CustomizeButton

@@ -1,7 +1,8 @@
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  signInWithPopup
+  signInWithPopup,
+  signOut
 } from "firebase/auth";
 import { collection, doc, setDoc } from "firebase/firestore";
 import Swal from "sweetalert2";
@@ -64,6 +65,19 @@ const login = (user) => {
   };
 };
 
+const logout = () => {
+  return (dispatch) => {
+    signOut(auth).then(() => {
+      dispatch({
+        type: Types.logout,
+        payload: {
+          isAuthenticated: false
+        }
+      });
+    });
+  };
+};
+
 const loginGoogle = () => {
   return (dispatch) => {
     signInWithPopup(auth, google).then((result) => {
@@ -79,6 +93,15 @@ const loginEmailPassword = (email, password) => {
     signInWithEmailAndPassword(auth, email, password).then((result) => {
       const user = result.user;
       dispatch(login(user));
+    }).catch((err)=>{
+      Swal.fire({
+        position: "center",
+        text: `${err.message}`,
+        icon: "error",
+        title: "Error",
+        showConfirmButton: false,
+        timer: 1500
+      });
     });
   };
 };
@@ -86,5 +109,7 @@ export {
   startRegisterWithEmailPasswordName,
   loginEmailPassword,
   loginFacebook,
-  loginGoogle
+  loginGoogle,
+  logout,
+  login
 };

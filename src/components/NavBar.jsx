@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
+import { logout } from "../redux/actions/authAction";
 import {
   buscarPelicula,
   getPeliculas,
@@ -69,12 +70,14 @@ const NavBar = () => {
               Menos Valoradas
             </Link>
             <Link
+              style={{ display: user?.isAuthenticated ? "none" : "block" }}
               className="nav-link text-white bold text-decoration-none mx-4"
               to="/register"
             >
               Registro
             </Link>
             <Link
+              style={{ display: user?.isAuthenticated ? "none" : "block" }}
               className="nav-link text-white bold text-decoration-none mx-4"
               to="/login"
             >
@@ -87,6 +90,13 @@ const NavBar = () => {
             >
               Cargar Peliculas
             </Link>
+            <button
+              className="nav-link text-white bold text-decoration-none bg-transparent"
+              style={{ display: user?.isAuthenticated ? "block" : "none", border: "none"}}
+              onClick={() => dispatch(logout())}
+            >
+              Logout
+            </button>
           </Nav>
           <Buscador
             filter={buscarPelicula}

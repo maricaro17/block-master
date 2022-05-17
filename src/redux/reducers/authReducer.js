@@ -3,7 +3,7 @@ import { Types } from "../type";
 const initialState = {
   name: "",
   email: "",
-  id: "",
+  id: ""
 };
 
 const registerReducer = (state = initialState, action) => {
@@ -15,15 +15,17 @@ const registerReducer = (state = initialState, action) => {
   }
 };
 const authState = {
-  isAuthenticated: false,
-}
-const loginReducer = (state = authState, action)=> {
+  isAuthenticated: false
+};
+const loginReducer = (state = authState, action) => {
   switch (action.type) {
     case Types.login:
+      return action.payload;
+    case Types.logout:
       return action.payload;
     default:
       return state;
   }
-}
+};
 
-export {registerReducer, loginReducer}
+export { registerReducer, loginReducer };

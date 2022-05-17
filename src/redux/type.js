@@ -17,6 +17,7 @@ const Types = {
   authRegister: "[Register] user register",
   searchTitle: "[Search] buscador de pelicula",
   search: "[Search] Peliculas",
-  login: "[LOGIN] login"
+  login: "[LOGIN] login",
+  logout: "[LOGOUT] cerrar sesion"
 };
 export { Types };
