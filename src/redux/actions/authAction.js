@@ -6,7 +6,7 @@ import {
 } from "firebase/auth";
 import { collection, doc, setDoc } from "firebase/firestore";
 import Swal from "sweetalert2";
-import { auth, db, google } from "../../config/firebaseConfig";
+import { auth, db, facebook, google } from "../../config/firebaseConfig";
 import { Types } from "../type";
 
 const startRegisterWithEmailPasswordName = ({
@@ -87,7 +87,14 @@ const loginGoogle = () => {
   };
 };
 
-const loginFacebook = () => {};
+const loginFacebook = () => {
+  return (dispatch) => {
+    signInWithPopup(auth, facebook).then((result) => {
+      const user = result.user;
+      dispatch(login(user));
+    });
+  }
+};
 const loginEmailPassword = (email, password) => {
   return (dispatch) => {
     signInWithEmailAndPassword(auth, email, password).then((result) => {
