@@ -189,7 +189,6 @@ const search = async (search, dispatch, types) => {
       ...doc.data()
     });
   });
-  console.log(search);
   const regexp = new RegExp(search, "i");
   const movies = list.filter((movie) => regexp.test(movie.name));
   dispatch({

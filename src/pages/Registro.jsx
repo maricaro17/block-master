@@ -12,9 +12,6 @@ const Registro = () => {
   const dispatch = useDispatch();
   const loading = useSelector((store) => store.ui);
 
-  const validationSchema = Yup.object({
-    name: Yup.string().min(3, "El nombre es muy corto").required()
-  });
   const formik = useFormik({
     initialValues: {
       name: "",

@@ -14,5 +14,16 @@ const registerReducer = (state = initialState, action) => {
       return state;
   }
 };
+const authState = {
+  isAuthenticated: false,
+}
+const loginReducer = (state = authState, action)=> {
+  switch (action.type) {
+    case Types.login:
+      return action.payload;
+    default:
+      return state;
+  }
+}
 
-export {registerReducer}
+export {registerReducer, loginReducer}

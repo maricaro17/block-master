@@ -24,8 +24,6 @@ const Peliculas = () => {
   const showDetails = useSelector((store) => store.showDetails);
   const [loading, setLoading] = useState(true);
 
-
-  console.log(peliculas);
   useEffect(() => {
     if (loading) {
       dispatch(

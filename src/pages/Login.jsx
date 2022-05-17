@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import CustomizeButton from '../components/CustomizeButton';
 import { useForm } from '../hooks/useForm';
+import { loginEmailPassword, loginFacebook, loginGoogle } from '../redux/actions/authAction';
 import constantes from "../utils/constantes";
 
 const Login = () => {

@@ -1,6 +1,7 @@
 import { Route, BrowserRouter, Routes } from "react-router-dom";
 import NavBar from "../components/NavBar";
 import CargarPeliculas from "../pages/CargarPeliculas";
+import Login from "../pages/Login";
 import Peliculas from "../pages/Peliculas";
 import PeliculasLeast from "../pages/PeliculasLeast";
 import PeliculasTop from "../pages/PeliculasTop";
@@ -23,6 +24,14 @@ const Router = () => {
             element={
               <PublicRouter>
                 <Registro />
+              </PublicRouter>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <PublicRouter>
+                <Login />
               </PublicRouter>
             }
           />

@@ -1,21 +1,20 @@
 import {
-  getAuth,
   createUserWithEmailAndPassword,
-  signInWithPopup,
+  signInWithEmailAndPassword,
+  signInWithPopup
 } from "firebase/auth";
 import { collection, doc, setDoc } from "firebase/firestore";
 import Swal from "sweetalert2";
-import { auth, db } from "../../config/firebaseConfig";
+import { auth, db, google } from "../../config/firebaseConfig";
 import { Types } from "../type";
 
 const startRegisterWithEmailPasswordName = ({
   name,
   lastname,
   email,
-  password,
+  password
 }) => {
   return async (dispatch) => {
-    
     try {
       const newUsr = await createUserWithEmailAndPassword(
         auth,
@@ -24,7 +23,7 @@ const startRegisterWithEmailPasswordName = ({
       );
       await setDoc(doc(collection(db, "usuarios"), newUsr.user.uid), {
         name: `${name} ${lastname}`,
-        email,
+        email
       });
       Swal.fire({
         position: "center",
@@ -32,21 +31,60 @@ const startRegisterWithEmailPasswordName = ({
         icon: "success",
         title: "Exitoso!!",
         showConfirmButton: false,
-        timer: 1500,
+        timer: 1500
       });
       dispatch(register(newUsr.user.uid, name, email));
     } catch (error) {
-        console.log(error)
+      Swal.fire({
+        position: "center",
+        text: `Ocurrio un error`,
+        icon: "error",
+        title: "Error",
+        showConfirmButton: false,
+        timer: 1500
+      });
     }
   };
 };
 const register = (id, name, email) => {
-    console.log(name)
   return {
     type: Types.authRegister,
-    payload: { id, name, email },
+    payload: { id, name, email }
   };
 };
 
+const login = (user) => {
+  return {
+    type: Types.login,
+    payload: {
+      id: user.uid,
+      name: user.displayName,
+      isAuthenticated: true
+    }
+  };
+};
 
-export { startRegisterWithEmailPasswordName };
+const loginGoogle = () => {
+  return (dispatch) => {
+    signInWithPopup(auth, google).then((result) => {
+      const user = result.user;
+      dispatch(login(user));
+    });
+  };
+};
+
+const loginFacebook = () => {};
+const loginEmailPassword = (email, password) => {
+  return (dispatch) => {
+    signInWithEmailAndPassword(auth, email, password).then((result) => {
+      const user = result.user;
+      dispatch(login(user));
+    });
+  };
+};
+export {
+  startRegisterWithEmailPasswordName,
+  loginEmailPassword,
+  loginFacebook,
+  loginGoogle
+};

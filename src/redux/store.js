@@ -9,6 +9,7 @@ import {
 } from "./reducers/peliculasReducer";
 import { uiReducer } from "./reducers/uiReducer";
 import { searchReducer } from "./reducers/searchReducer";
+import { loginReducer } from "./reducers/authReducer";
 
 const reducers = combineReducers({
   banners: bannersReducer,
@@ -18,6 +19,7 @@ const reducers = combineReducers({
   showDetails: showDetailsReducer,
   search: searchReducer,
   ui: uiReducer,
+  auth: loginReducer
 });
 
 const store = configureStore({
