@@ -10,14 +10,18 @@ import { startRegisterWithEmailPasswordName } from "../redux/actions/authAction"
 
 const Registro = () => {
   const dispatch = useDispatch();
-  const loading = useSelector((store)=> store.ui);
+  const loading = useSelector((store) => store.ui);
+
+  const validationSchema = Yup.object({
+    name: Yup.string().min(3, "El nombre es muy corto").required()
+  });
   const formik = useFormik({
     initialValues: {
       name: "",
       lastname: "",
       email: "",
       password: "",
-      password2: "",
+      password2: ""
     },
     validationSchema: Yup.object({
       name: Yup.string()
@@ -39,23 +43,16 @@ const Registro = () => {
         .required("Escribe tu contraseña."),
     }),
     onSubmit: (data) => {
-        console.log("texto normal");
-        console.log(data);
+      console.log(data);
       dispatch(startRegisterWithEmailPasswordName(data));
-    },
+    }
   });
-  const {
-    name,
-    lastname,
-    email,
-    password,
-    password2,
-  } = formik.values;
+  const { name, lastname, email, password, password2 } = formik.values;
   return (
     <Container
       className="d-flex m-auto align-self-center"
       style={{
-        height: "80vh",
+        height: "80vh"
       }}
     >
       <Form onSubmit={formik.handleSubmit} className="m-auto">
@@ -73,8 +70,13 @@ const Registro = () => {
             onBlur={formik.handleBlur}
           />
         </Form.Group>
+        {formik.touched.name && formik.errors.name ? (
+          <Container className="error-validation">
+            {formik.errors.name}
+          </Container>
+        ) : null}
         <Form.Group className="mb-3">
-        <Form.Label>{constantes.NAME}</Form.Label>
+          <Form.Label>{constantes.LASTNAME}</Form.Label>
           <Form.Control
             className="mb-1"
             type="text"
@@ -85,6 +87,11 @@ const Registro = () => {
             onBlur={formik.handleBlur}
           />
         </Form.Group>
+        {formik.touched.lastname && formik.errors.lastname ? (
+          <Container className="error-validation">
+            {formik.errors.lastname}
+          </Container>
+        ) : null}
         <Form.Group className="mb-3">
           <Form.Label>{constantes.EMAIL}</Form.Label>
           <Form.Control
@@ -97,6 +104,11 @@ const Registro = () => {
             onBlur={formik.handleBlur}
           />
         </Form.Group>
+        {formik.touched.email && formik.errors.email ? (
+          <Container className="error-validation">
+            {formik.errors.email}
+          </Container>
+        ) : null}
         <Form.Group className="mb-3">
           <Form.Label>{constantes.CONTRASENA}</Form.Label>
           <Form.Control
@@ -109,6 +121,11 @@ const Registro = () => {
             onBlur={formik.handleBlur}
           />
         </Form.Group>
+        {formik.touched.password && formik.errors.password ? (
+          <Container className="error-validation">
+            {formik.errors.password}
+          </Container>
+        ) : null}
         <Form.Group className="mb-3">
           <Form.Label>{constantes.CONFIRMAR_CONTRASENA}</Form.Label>
           <Form.Control
@@ -121,6 +138,11 @@ const Registro = () => {
             onBlur={formik.handleBlur}
           />
         </Form.Group>
+        {formik.touched.password2 && formik.errors.password2 ? (
+          <Container className="error-validation">
+            {formik.errors.password2}
+          </Container>
+        ) : null}
         <CustomizeButton
           custom="primary"
           type="submit"

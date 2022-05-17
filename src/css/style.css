@@ -134,3 +134,8 @@ body {
 .modal-content {
   background-color: transparent !important;
 }
+.error-validation{
+  margin: 0 auto 1rem auto;
+  color: brown;
+  background-color: #fed941;
+}

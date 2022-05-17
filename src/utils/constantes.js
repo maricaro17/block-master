@@ -20,6 +20,7 @@ const constantes = {
   EMAIL: "Email",
   LOGOUT: "Cerrar Sesión",
   NAME: "Nombre",
+  LASTNAME:"Apellido",
   NEXT: "Siguiente",
   PAGE: "Pagina",
   CONTRASENA: "Contraseña",

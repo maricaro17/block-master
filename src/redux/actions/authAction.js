@@ -5,7 +5,7 @@ import {
 } from "firebase/auth";
 import { collection, doc, setDoc } from "firebase/firestore";
 import Swal from "sweetalert2";
-import { db } from "../../config/firebaseConfig";
+import { auth, db } from "../../config/firebaseConfig";
 import { Types } from "../type";
 
 const startRegisterWithEmailPasswordName = ({
@@ -15,7 +15,7 @@ const startRegisterWithEmailPasswordName = ({
   password,
 }) => {
   return async (dispatch) => {
-    const auth = getAuth();
+    
     try {
       const newUsr = await createUserWithEmailAndPassword(
         auth,
