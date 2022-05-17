@@ -48,4 +48,5 @@ const register = (id, name, email) => {
   };
 };
 
+
 export { startRegisterWithEmailPasswordName };

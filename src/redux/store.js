@@ -15,6 +15,7 @@ const reducers = combineReducers({
   peliculaSelect: selectPeliculasReducer,
   modalPeliculas: showModalRegisterPeliculasReducer,
   showDetails: showDetailsReducer,
+  
   ui: uiReducer,
 });
 
