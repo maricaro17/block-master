@@ -43,8 +43,8 @@ const Registro = () => {
         .required("Escribe tu contraseña."),
     }),
     onSubmit: (data) => {
-      console.log(data);
       dispatch(startRegisterWithEmailPasswordName(data));
+      formik.resetForm(formik.initialStatus)
     }
   });
   const { name, lastname, email, password, password2 } = formik.values;

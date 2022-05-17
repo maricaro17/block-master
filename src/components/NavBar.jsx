@@ -49,9 +49,12 @@ const NavBar = () => {
             >
               Login
             </Link>
-            <Button className="text-white" onClick={() => dispatch(showModalRegisterPeliculas())}>
-              <GrAdd />
-            </Button>
+            <Link
+              className="nav-link text-white bold text-decoration-none mx-4"
+              to="/cargar-peliculas"
+            >
+              Cargar Peliculas
+            </Link>
           </Nav>
           <Buscador />
         </Container>
