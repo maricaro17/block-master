@@ -8,6 +8,7 @@ import {
   showModalRegisterPeliculasReducer,
 } from "./reducers/peliculasReducer";
 import { uiReducer } from "./reducers/uiReducer";
+import { searchReducer } from "./reducers/searchReducer";
 
 const reducers = combineReducers({
   banners: bannersReducer,
@@ -15,7 +16,7 @@ const reducers = combineReducers({
   peliculaSelect: selectPeliculasReducer,
   modalPeliculas: showModalRegisterPeliculasReducer,
   showDetails: showDetailsReducer,
-  
+  search: searchReducer,
   ui: uiReducer,
 });
 

@@ -1,12 +1,43 @@
-import React from "react";
-import { Button, Container, Nav, Navbar } from "react-bootstrap";
-import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import { showModalRegisterPeliculas } from "../redux/actions/peliculaAction";
+import React, { useState } from "react";
+import { Container, Nav, Navbar } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useLocation } from "react-router-dom";
+import {
+  buscarPelicula,
+  getPeliculas,
+  getPeliculasLeast,
+  getPeliculasTop
+} from "../redux/actions/peliculaAction";
+import { Types } from "../redux/type";
 import Buscador from "./Buscador";
-import { GrAdd } from "react-icons/gr";
 const NavBar = () => {
   const dispatch = useDispatch();
+  const [searchTerm, setSearchTerm] = useState("");
+  const user = useSelector((store) => store.auth);
+
+  const location = useLocation();
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+    if (e.target.value.length < 1) {
+      switch (location.pathname) {
+        case "/menos-valoradas":
+          dispatch(getPeliculasLeast("least"));
+          break;
+        case "/mas-valoradas":
+          dispatch(getPeliculasTop("top"));
+          break;
+        default:
+          dispatch(getPeliculas({ action: "get" }));
+      }
+      dispatch({
+        type: Types.searchTitle,
+        payload: {
+          isSearch: false
+        }
+      });
+    }
+  };
+
   return (
     <div>
       <Navbar bg="black">
@@ -52,11 +83,16 @@ const NavBar = () => {
             <Link
               className="nav-link text-white bold text-decoration-none mx-4"
               to="/cargar-peliculas"
+              style={{ display: user?.isAuthenticated ? "block" : "none" }}
             >
               Cargar Peliculas
             </Link>
           </Nav>
-          <Buscador />
+          <Buscador
+            filter={buscarPelicula}
+            handleSearch={handleSearch}
+            searchTerm={searchTerm}
+          />
         </Container>
       </Navbar>
     </div>

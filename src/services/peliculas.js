@@ -11,7 +11,7 @@ import {
   limit,
   orderBy,
   startAfter,
-  startAt,
+  startAt
 } from "firebase/firestore";
 
 const coleccion = "Pelicula";
@@ -26,12 +26,12 @@ const findAll = async (dispatch, types) => {
   peliculas.forEach((doc) => {
     list.push({
       id: doc.id,
-      ...doc.data(),
+      ...doc.data()
     });
   });
   dispatch({
     type: types.peliculasList,
-    payload: list,
+    payload: list
   });
 };
 
@@ -108,7 +108,7 @@ const findByRate = async (rate) => {
   peliculas.forEach((pelicula) => {
     list.push({
       id: pelicula.id,
-      ...pelicula.data(),
+      ...pelicula.data()
     });
   });
   return list;
@@ -147,12 +147,12 @@ const next = async (dispatch, types) => {
   peliculas.forEach((doc) => {
     list.push({
       id: doc.id,
-      ...doc.data(),
+      ...doc.data()
     });
   });
   dispatch({
     type: types.peliculasList,
-    payload: list,
+    payload: list
   });
 };
 const previous = async (dispatch, types) => {
@@ -169,12 +169,39 @@ const previous = async (dispatch, types) => {
   peliculas.forEach((doc) => {
     list.push({
       id: doc.id,
-      ...doc.data(),
+      ...doc.data()
     });
   });
   dispatch({
     type: types.peliculasList,
-    payload: list,
+    payload: list
+  });
+};
+
+const search = async (search, dispatch, types) => {
+  const peliculas = await getDocs(
+    query(collection(db, coleccion), orderBy("year", "desc"), limit(10000))
+  );
+  const list = [];
+  peliculas.forEach((doc) => {
+    list.push({
+      id: doc.id,
+      ...doc.data()
+    });
+  });
+  console.log(search);
+  const regexp = new RegExp(search, "i");
+  const movies = list.filter((movie) => regexp.test(movie.name));
+  dispatch({
+    type: types.search,
+    payload: movies
+  });
+  dispatch({
+    type: types.searchTitle,
+    payload: {
+      isSearch: true,
+      searchTerm: search
+    }
   });
 };
 const Peliculas = {
@@ -185,5 +212,6 @@ const Peliculas = {
   remove,
   next,
   previous,
+  search
 };
 export default Peliculas;

@@ -15,7 +15,8 @@ const Types = {
   uiStartLoading: "[UI] Start Loading",
   uiFinishLoading: "[UI] Finish Loading",
   authRegister: "[Register] user register",
-
+  searchTitle: "[Search] buscador de pelicula",
+  search: "[Search] Peliculas",
 
 };
 export { Types };

@@ -5,7 +5,7 @@ const initialState = {
   name: "pelicula",
   imagenUrl: constantes.DEFAULT_PELICULA_POSTER,
   rate: 0,
-  genero: ["example1", "example2"],
+  genero: ["example1", "example2"]
 };
 
 const stateList = [initialState];
@@ -14,6 +14,7 @@ const peliculaReducer = (state = stateList, action) => {
     case Types.peliculasList:
     case Types.peliculasTopList:
     case Types.peliculasLeastList:
+    case Types.search:
       return action.payload;
     default:
       return state;
@@ -57,5 +58,5 @@ export {
   peliculaReducer,
   showModalRegisterPeliculasReducer,
   showDetailsReducer,
-  selectPeliculasReducer,
+  selectPeliculasReducer
 };

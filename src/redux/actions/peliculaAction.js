@@ -164,6 +164,13 @@ const deletePelicula = (pelicula) => {
     }
   };
 };
+
+const buscarPelicula = (search)=>{
+  return (dispatch) => {
+    Peliculas.search(search, dispatch, Types);
+  };
+}
+
 export {
   selectPelicula,
   deselectPelicula,
@@ -177,4 +184,5 @@ export {
   getPeliculasLeast,
   deletePelicula,
   updatePelicula,
+  buscarPelicula
 };
