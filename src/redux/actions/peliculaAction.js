@@ -55,12 +55,8 @@ const getPeliculas = (opt) => {
   return (dispatch) => {
     switch (opt.action) {
       case "next":
-      case "nextTopPage":
-      case "nextLeastPage":
         return Peliculas.next(dispatch, Types);
       case "previous":
-      case "prevTopPage":
-      case "prevLeastPage":
         return Peliculas.previous(dispatch, Types);
       default:
         return Peliculas.findAll(dispatch, Types);
@@ -124,21 +120,9 @@ const hideDetails = () => {
   };
 };
 
-const getPeliculasTop = (opt) => {
-  switch (opt.action) {
-    case "top":
-
-    break;
-    case "nextTopPage":
-      
-      break;
-      case "prevTopPage":
-        break;
-    default:
-      break;
-  }
+const getPeliculasTop = (option) => {
   return (dispatch) => {
-    Peliculas.findByRate("top").then((data) => {
+    Peliculas.findByRate(option).then((data) => {
       dispatch({
         type: Types.peliculasTopList,
         payload: data,
@@ -146,9 +130,9 @@ const getPeliculasTop = (opt) => {
     });
   };
 };
-const getPeliculasLeast = () => {
+const getPeliculasLeast = (option) => {
   return (dispatch) => {
-    Peliculas.findByRate("least").then((data) => {
+    Peliculas.findByRate(option).then((data) => {
       dispatch({
         type: Types.peliculasLeastList,
         payload: data,

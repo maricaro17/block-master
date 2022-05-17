@@ -105,7 +105,6 @@ const findByRate = async (rate) => {
     primerDocumento = peliculas.docs[0];
     ultimoDocumento = peliculas.docs[peliculas.docs.length - 1];
   }
-
   peliculas.forEach((pelicula) => {
     list.push({
       id: pelicula.id,

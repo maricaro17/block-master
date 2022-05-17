@@ -7,7 +7,7 @@ import ModalRegistro from '../components/ModalRegistro'
 import PeliculaDetails from '../components/PeliculaDetails'
 import Slider from "../components/Slider"
 import Title from '../components/Title'
-import { getPeliculas, getPeliculasTop, hideDetails, hideModalRegisterPeliculas } from '../redux/actions/peliculaAction'
+import { getPeliculasTop, hideDetails, hideModalRegisterPeliculas } from '../redux/actions/peliculaAction'
 import constantes from '../utils/constantes'
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa"
 const PeliculasTop = () => {
@@ -20,16 +20,16 @@ const PeliculasTop = () => {
     useEffect(() => {
       if (loading) {
         dispatch(
-          getPeliculasTop()
+          getPeliculasTop("top")
         );
       }
       return () => setLoading(false);
     }, [dispatch, loading, peliculas, showModal]);
     const handleNext = () => {
-        dispatch(getPeliculas({ action: "nextTopPage" }));
+        dispatch(getPeliculasTop("nextTopPage"));
       };
       const handlePrevious = () => {
-        dispatch(getPeliculas({ action: "prevTopPage" }));
+        dispatch(getPeliculasTop("prevTopPage"));
       };
   return (
     <div>

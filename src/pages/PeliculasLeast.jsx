@@ -8,7 +8,6 @@ import PeliculaDetails from "../components/PeliculaDetails";
 import Slider from "../components/Slider";
 import Title from "../components/Title";
 import {
-    getPeliculas,
   getPeliculasLeast,
   hideDetails,
   hideModalRegisterPeliculas,
@@ -26,17 +25,19 @@ const PeliculasLeast = () => {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     if (loading) {
-      dispatch(getPeliculasLeast());
+      dispatch(getPeliculasLeast("least"));
     }
     return () => setLoading(false);
   }, [dispatch, loading, peliculas, showModal]);
 
   const handleNext = () => {
-    dispatch(getPeliculas({ action: "nextLeastPage" }));
+    dispatch(getPeliculasLeast("nextLeastPage"));
   };
+
   const handlePrevious = () => {
-    dispatch(getPeliculas({ action: "prevLeastPage" }));
+    dispatch(getPeliculasLeast("prevLeastPage"));
   };
+  
   return (
     <div>
       <Slider />
